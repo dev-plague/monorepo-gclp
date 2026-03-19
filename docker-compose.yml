@@ -12,17 +12,5 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
-  pgadmin:
-    image: dpage/pgadmin4
-    container_name: gclp-pgadmin
-    restart: always
-    environment:
-      PGADMIN_DEFAULT_EMAIL: dev@gclp.com
-      PGADMIN_DEFAULT_PASSWORD: devpass
-    ports:
-      - "5050:80"
-    depends_on:
-      - db
-
 volumes:
   postgres_data:

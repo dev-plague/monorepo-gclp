@@ -7,6 +7,14 @@
   "peerDependencies": {
     "typescript": "^5"
   },
+  "scripts": {
+    "db:up": "docker compose up -d",
+    "db:down": "docker compose down",
+    "db:clear": "docker compose down -v",
+    "db:generate": "bun run --filter @repo/core db:generate",
+    "db:migrate": "bun run --filter @repo/core db:migrate",
+    "db:studio": "bun run --filter @repo/core db:studio"
+  },
   "private": true,
   "type": "module",
   "workspaces": [
@@ -16,30 +24,5 @@
   "catalog": {
     "typescript": "^5.9.2",
     "@types/node": "^22.0.0"
-  },
-  "catalogs": {
-    "ui": {
-      "react": "^19.2.4",
-      "react-dom": "^19.2.4",
-      "react-router": "7.12.0",
-      "isbot": "^5.1.31",
-      "tailwindcss": "^4.1.13",
-      "vite": "^7.1.7",
-      "vite-tsconfig-paths": "^5.1.4",
-      "class-variance-authority": "^0.7.1",
-      "clsx": "^2.1.1",
-      "lucide-react": "^0.577.0",
-      "radix-ui": "^1.4.3",
-      "shadcn": "^4.0.8",
-      "tailwind-merge": "^3.5.0",
-      "tw-animate-css": "^1.4.0",
-      "@react-router/node": "7.12.0",
-      "@react-router/serve": "7.12.0",
-      "@react-router/dev": "7.12.0",
-      "@types/react": "19.2.7",
-      "@types/react-dom": "19.2.3",
-      "@tailwindcss/vite": "^4.1.13",
-      "@fontsource-variable/geist": "^5.2.8"
-    }
   }
 }

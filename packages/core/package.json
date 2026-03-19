@@ -9,10 +9,26 @@
     "./*": "./src/*.ts",
     "./invoice/*": "./src/invoice/*.ts"
   },
+  "scripts": {
+    "seed": "bun --env-file ../../.env src/infrastructure/db/seed.ts",
+    "db:generate": "bun --env-file ../../.env drizzle-kit generate",
+    "db:migrate": "bun --env-file ../../.env drizzle-kit migrate",
+    "db:studio": "bun --env-file ../../.env drizzle-kit studio"
+  },
   "devDependencies": {
-    "@types/bun": "latest"
+    "@types/bcrypt": "^6.0.0",
+    "@types/bun": "latest",
+    "@types/pg": "^8.18.0",
+    "drizzle-kit": "^0.31.10",
+    "tsx": "^4.21.0"
   },
   "peerDependencies": {
-    "typescript": "^5"
+    "typescript": "catalog:"
+  },
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "drizzle-orm": "^0.45.1",
+    "pg": "^8.20.0",
+    "zod": "^4.3.6"
   }
 }
