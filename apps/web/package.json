@@ -1,0 +1,38 @@
+{
+  "name": "@repo/web",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "react-router build",
+    "dev": "react-router dev",
+    "start": "react-router-serve ./build/server/index.js",
+    "typecheck": "react-router typegen && tsc"
+  },
+  "dependencies": {
+    "@fontsource-variable/geist": "catalog:ui",
+    "@react-router/node": "catalog:ui",
+    "@react-router/serve": "catalog:ui",
+    "class-variance-authority": "catalog:ui",
+    "clsx": "catalog:ui",
+    "isbot": "catalog:ui",
+    "lucide-react": "catalog:ui",
+    "radix-ui": "catalog:ui",
+    "react": "catalog:ui",
+    "react-dom": "catalog:ui",
+    "react-router": "catalog:ui",
+    "shadcn": "catalog:ui",
+    "tailwind-merge": "catalog:ui",
+    "tw-animate-css": "catalog:ui"
+  },
+  "devDependencies": {
+    "@react-router/dev": "catalog:ui",
+    "@tailwindcss/vite": "catalog:ui",
+    "@types/node": "catalog:",
+    "@types/react": "catalog:ui",
+    "@types/react-dom": "catalog:ui",
+    "tailwindcss": "catalog:ui",
+    "typescript": "catalog:",
+    "vite": "catalog:ui",
+    "vite-tsconfig-paths": "catalog:ui"
+  }
+}
