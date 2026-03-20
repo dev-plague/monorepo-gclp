@@ -5,19 +5,13 @@ import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
 import { Spinner } from "~/components/ui/spinner";
+import { Form, useNavigation } from "react-router";
 
-export function LoginForm() {
+export function LoginForm({ error }: { error?: string }) {
   const [showPassword, setShowPassword] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsLoading(true);
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-    setIsLoading(false);
-  };
+  const navigation = useNavigation();
+  const isLoading = navigation.state === "submitting";
 
   return (
     <div className="space-y-8">
@@ -30,7 +24,9 @@ export function LoginForm() {
         </p>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-6">
+      {error && <p className="text-sm text-destructive">{error}</p>}
+
+      <Form method="post" className="space-y-6">
         <div className="space-y-4">
           <div className="space-y-2">
             <Label htmlFor="email" className="text-sm font-medium">
@@ -38,10 +34,9 @@ export function LoginForm() {
             </Label>
             <Input
               id="email"
+              name="email"
               type="email"
               placeholder="nombre@empresa.com"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
               className="h-12 bg-card border-border focus:border-foreground focus:ring-foreground/20 transition-colors"
               required
             />
@@ -56,10 +51,9 @@ export function LoginForm() {
             <div className="relative">
               <Input
                 id="password"
+                name="password"
                 type={showPassword ? "text" : "password"}
                 placeholder="••••••••"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
                 className="h-12 bg-card border-border focus:border-foreground focus:ring-foreground/20 transition-colors pr-12"
                 required
               />
@@ -95,7 +89,7 @@ export function LoginForm() {
             </>
           )}
         </Button>
-      </form>
+      </Form>
 
       <div className="relative">
         <div className="absolute inset-0 flex items-center">

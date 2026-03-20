@@ -6,8 +6,7 @@
   "private": true,
   "exports": {
     ".": "./src/index.ts",
-    "./*": "./src/*.ts",
-    "./invoice/*": "./src/invoice/*.ts"
+    "./*": "./src/*.ts"
   },
   "scripts": {
     "seed": "bun --env-file ../../.env src/infrastructure/db/seed.ts",

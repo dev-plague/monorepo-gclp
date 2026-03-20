@@ -1,9 +1,7 @@
-import { drizzle } from "drizzle-orm/node-postgres";
-import { usersTable } from "./schemas/user";
+import { rolesEnum, usersTable } from "./schemas/user";
 import { companyTable } from "./schemas/company";
 import { ENV } from "../shared/environment";
-
-const db = drizzle(ENV.DATABASE_URL!);
+import { db } from "../..";
 
 async function main() {
   const companyValues: typeof companyTable.$inferInsert = {
@@ -15,6 +13,7 @@ async function main() {
     name: "Admin",
     lastName: "System",
     email: ENV.ADMIN_EMAIL,
+    role: rolesEnum.enumValues[0],
     password: await Bun.password.hash(ENV.ADMIN_PASSWORD, {
       algorithm: "bcrypt",
     }),

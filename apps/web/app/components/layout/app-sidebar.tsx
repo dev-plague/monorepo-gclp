@@ -35,7 +35,8 @@ import {
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
 import { Avatar, AvatarFallback } from "../ui/avatar";
-import { Link } from "react-router";
+import { Form, Link, useSubmit } from "react-router";
+import type { UserToPresentation } from "@repo/core/infrastructure/mapper/user";
 
 const mainNavItems = [
   {
@@ -91,8 +92,12 @@ const reportNavItems = [
   },
 ];
 
-export function AppSidebar() {
-  //   const pathname = usePathname();
+interface Props {
+  user: UserToPresentation;
+}
+
+export function AppSidebar({ user }: Props) {
+  const submit = useSubmit();
 
   return (
     <Sidebar collapsible="icon" className="border-r border-border">
@@ -202,8 +207,8 @@ export function AppSidebar() {
                     </AvatarFallback>
                   </Avatar>
                   <div className="flex flex-1 flex-col text-left text-xs group-data-[collapsible=icon]:hidden">
-                    <span className="font-medium">Admin System</span>
-                    <span className="text-muted-foreground">Administrador</span>
+                    <span className="font-medium">{`${user?.name} ${user?.lastName}`}</span>
+                    <span className="text-muted-foreground">{user?.role}</span>
                   </div>
                   <ChevronDown className="h-4 w-4 text-muted-foreground group-data-[collapsible=icon]:hidden" />
                 </SidebarMenuButton>
@@ -222,7 +227,12 @@ export function AppSidebar() {
                   Preferencias
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem className="text-destructive">
+                <DropdownMenuItem
+                  className="text-destructive"
+                  onClick={() =>
+                    submit(null, { method: "post", action: "/logout" })
+                  }
+                >
                   <LogOut className="mr-2 h-4 w-4" />
                   Cerrar sesión
                 </DropdownMenuItem>

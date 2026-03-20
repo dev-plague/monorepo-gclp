@@ -1,6 +1,11 @@
+import { useActionData } from "react-router";
+import { loginAction } from "~/.server/auth/controller/login/action";
 import { LoginForm } from "~/components/auth/login-form";
 
+export const action = loginAction;
+
 export default function LoginPage() {
+  const actionData = useActionData<typeof action>();
   const currentYear = new Date().getFullYear();
   return (
     <div className="min-h-screen flex">
@@ -33,7 +38,7 @@ export default function LoginPage() {
           </div>
 
           {/* Login Form */}
-          <LoginForm />
+          <LoginForm error={actionData?.error} />
 
           {/* Footer */}
           <div className="mt-10 pt-6 border-t border-border">

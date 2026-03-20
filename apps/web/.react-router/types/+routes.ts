@@ -14,6 +14,12 @@ type Pages = {
   "/": {
     params: {};
   };
+  "/login": {
+    params: {};
+  };
+  "/logout": {
+    params: {};
+  };
   "/dashboard": {
     params: {};
   };
@@ -22,14 +28,18 @@ type Pages = {
 type RouteFiles = {
   "root.tsx": {
     id: "root";
-    page: "/" | "/dashboard";
+    page: "/" | "/login" | "/logout" | "/dashboard";
   };
   "routes/auth/login-page.tsx": {
     id: "routes/auth/login-page";
-    page: "/";
+    page: "/login";
   };
-  "./components/layout/layout.tsx": {
-    id: "components/layout/layout";
+  "routes/auth/logout.ts": {
+    id: "routes/auth/logout";
+    page: "/logout";
+  };
+  "./components/layout/dashboard-layout.tsx": {
+    id: "components/layout/dashboard-layout";
     page: "/dashboard";
   };
   "./routes/index/home.tsx": {
@@ -41,6 +51,7 @@ type RouteFiles = {
 type RouteModules = {
   "root": typeof import("./app/root.tsx");
   "routes/auth/login-page": typeof import("./app/routes/auth/login-page.tsx");
-  "components/layout/layout": typeof import("./app/./components/layout/layout.tsx");
+  "routes/auth/logout": typeof import("./app/routes/auth/logout.ts");
+  "components/layout/dashboard-layout": typeof import("./app/./components/layout/dashboard-layout.tsx");
   "routes/index/home": typeof import("./app/./routes/index/home.tsx");
 };
