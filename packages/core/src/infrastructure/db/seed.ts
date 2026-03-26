@@ -1,43 +1,45 @@
 import { rolesEnum, usersTable } from "./schemas/user";
-import { companyTable } from "./schemas/company";
+import { companiesTable } from "./schemas/company";
 import { ENV } from "../shared/environment";
 import { db } from "../..";
 
 async function main() {
-  const companyValues: typeof companyTable.$inferInsert = {
-    nit: "000000000",
-    name: "Default Company",
-  };
-
-  const userValues: typeof usersTable.$inferInsert = {
-    name: "Admin",
-    lastName: "System",
-    email: ENV.ADMIN_EMAIL,
-    role: rolesEnum.enumValues[0],
-    password: await Bun.password.hash(ENV.ADMIN_PASSWORD, {
-      algorithm: "bcrypt",
-    }),
+  const companyValues = {
+    nit: "900123456-1",
+    name: "LiquidaPro S.A.S",
+    taxRegime: "comun" as const,
   };
 
   const result = await db.transaction(async (tx) => {
+    // 1. Crear o actualizar la empresa principal
     const [company] = await tx
-      .insert(companyTable)
+      .insert(companiesTable)
       .values(companyValues)
-      .onConflictDoUpdate({ target: companyTable.nit, set: companyValues })
+      .onConflictDoUpdate({ target: companiesTable.nit, set: companyValues })
       .returning();
+
+    if (!company) {
+      throw new Error("Failed to create or retrieve company");
+    }
+
+    // 2. Crear el usuario asociado a esa empresa
+    const userValues = {
+      name: "Admin",
+      lastName: "System",
+      email: ENV.ADMIN_EMAIL,
+      role: rolesEnum.enumValues[0], // "admin"
+      password: await Bun.password.hash(ENV.ADMIN_PASSWORD, {
+        algorithm: "bcrypt",
+      }),
+      companyId: company.id,
+    };
 
     const [user] = await tx
       .insert(usersTable)
-      .values({
-        ...userValues,
-        companyId: company?.id,
-      })
+      .values(userValues)
       .onConflictDoUpdate({
         target: usersTable.email,
-        set: {
-          ...userValues,
-          companyId: company?.id,
-        },
+        set: userValues,
       })
       .returning();
 
@@ -45,12 +47,9 @@ async function main() {
   });
 
   console.log(
-    `✅ Usuario semilla creado: ${JSON.stringify(result.user, null, 4)}`,
+    `✅ Infraestructura lista para la empresa: ${result.company.name}`,
   );
   console.log(`🔒 Contraseña para el usuario admin: ${ENV.ADMIN_PASSWORD}`);
-  console.log(
-    `✅ Empresa semilla creada: ${JSON.stringify(result.company, null, 4)}`,
-  );
 }
 
 await main();

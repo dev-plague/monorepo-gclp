@@ -1,5 +1,5 @@
 import { pgEnum, pgTable } from "drizzle-orm/pg-core";
-import { companyTable } from "./company";
+import { companiesTable } from "./company";
 
 export const rolesEnum = pgEnum("roles", ["admin", "user"]);
 
@@ -8,7 +8,10 @@ export const usersTable = pgTable("users", (t) => ({
   name: t.varchar({ length: 255 }).notNull(),
   lastName: t.varchar({ length: 255 }).notNull(),
   email: t.varchar({ length: 255 }).notNull().unique(),
-  role: rolesEnum().default("user").notNull(),
-  companyId: t.integer().references(() => companyTable.id),
   password: t.varchar().notNull(),
+  role: rolesEnum().default("user").notNull(),
+  companyId: t
+    .integer()
+    .references(() => companiesTable.id)
+    .notNull(),
 }));
