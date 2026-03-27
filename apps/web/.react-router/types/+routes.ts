@@ -23,12 +23,19 @@ type Pages = {
   "/dashboard": {
     params: {};
   };
+  "/companies": {
+    params: {};
+  };
 };
 
 type RouteFiles = {
   "root.tsx": {
     id: "root";
-    page: "/" | "/login" | "/logout" | "/dashboard";
+    page: "/" | "/login" | "/logout" | "/dashboard" | "/companies";
+  };
+  "routes/index.ts": {
+    id: "routes/index";
+    page: "/";
   };
   "routes/auth/login-page.tsx": {
     id: "routes/auth/login-page";
@@ -40,18 +47,24 @@ type RouteFiles = {
   };
   "./components/layout/dashboard-layout.tsx": {
     id: "components/layout/dashboard-layout";
+    page: "/dashboard" | "/companies";
+  };
+  "./routes/dashboard/home.tsx": {
+    id: "routes/dashboard/home";
     page: "/dashboard";
   };
-  "./routes/index/home.tsx": {
-    id: "routes/index/home";
-    page: "/dashboard";
+  "./routes/companies/companies-page.tsx": {
+    id: "routes/companies/companies-page";
+    page: "/companies";
   };
 };
 
 type RouteModules = {
   "root": typeof import("./app/root.tsx");
+  "routes/index": typeof import("./app/routes/index.ts");
   "routes/auth/login-page": typeof import("./app/routes/auth/login-page.tsx");
   "routes/auth/logout": typeof import("./app/routes/auth/logout.ts");
   "components/layout/dashboard-layout": typeof import("./app/./components/layout/dashboard-layout.tsx");
-  "routes/index/home": typeof import("./app/./routes/index/home.tsx");
+  "routes/dashboard/home": typeof import("./app/./routes/dashboard/home.tsx");
+  "routes/companies/companies-page": typeof import("./app/./routes/companies/companies-page.tsx");
 };
