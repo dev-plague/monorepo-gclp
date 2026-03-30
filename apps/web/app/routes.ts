@@ -11,6 +11,6 @@ export default [
   route("logout", "routes/auth/logout.ts"),
   layout("./components/layout/dashboard-layout.tsx", [
     route("dashboard", "./routes/dashboard/home.tsx"),
-    // route("companies", "./routes/companies/companies-page.tsx"),
+    route("companies", "./routes/companies/companies-page.tsx"),
   ]),
 ] satisfies RouteConfig;
